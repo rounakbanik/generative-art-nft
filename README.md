@@ -19,11 +19,11 @@ You can use this library even if you do not know how to program (in Python or ot
 
 **Clone this repository**
 
-`git clone https://github.com/rounakbanik/generative-art-nft.git`
+```git clone https://github.com/rounakbanik/generative-art-nft.git```
 
 **Install required packages**
 
-`pip install Pillow pandas progressbar`
+```pip install Pillow pandas progressbar```
 
 Upload your input assets in the `assets` folder, fill up the `config.py` file, and then run `python nft.py`.
 
@@ -33,7 +33,7 @@ I have authored a detailed tutorial explaining how to use this library. Check it
 
 ## About Scrappy Squirrels
 
-<img src='squirrels.gif' />
+<img src='squirrels.gif' height="250" width="250" />
 
 This library was created as part of the Scrappy Squirrels Project. 
 
