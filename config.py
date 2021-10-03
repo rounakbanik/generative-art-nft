@@ -12,11 +12,11 @@
 # 3. directory: The folder inside assets that contain traits for the particular layer
 # 4. required: If the particular layer is required (True) or optional (False). The first layer must always be set to true.
 # 5. rarity_weights: Denotes the rarity distribution of traits. It can take on three types of values.
-#       - "uniform": This makes all the traits defined in the layer equally rare (or common)
+#       - None: This makes all the traits defined in the layer equally rare (or common)
 #       - "random": Assigns rarity weights at random. 
 #       - array: An array of numbers where each number represents a weight. 
-#                If required is False, this array must be equal to the number of images in the layer directory. The first number is  the weight of the first image (in alphabetical order) and so on...
-#                If required is True, this array must be equal to one plus the number of images in the layer directory. The first number is the weight of having no image at all for this layer. The second number is the weight of the first image and so on...
+#                If required is True, this array must be equal to the number of images in the layer directory. The first number is  the weight of the first image (in alphabetical order) and so on...
+#                If required is False, this array must be equal to one plus the number of images in the layer directory. The first number is the weight of having no image at all for this layer. The second number is the weight of the first image and so on...
 
 # Be sure to check out the tutorial in the README for more details.                
 
