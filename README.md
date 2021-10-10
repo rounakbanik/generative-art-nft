@@ -26,7 +26,7 @@ You can use this library even if you do not know how to program (in Python or ot
 
 **Install required packages**
 
-```pip install Pillow pandas progressbar```
+```pip install Pillow pandas progressbar progressbar2```
 
 Upload your input assets in the `assets` folder, fill up the `config.py` file, and then run `python nft.py`.
 
