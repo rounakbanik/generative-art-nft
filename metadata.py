@@ -105,7 +105,7 @@ def main():
                 item_json['attributes'].append({ 'trait_type': attr, 'value': attr_dict[attr] })
         
         # Write file to json folder
-        item_json_path = os.path.join(json_path, str(idx) + '.json')
+        item_json_path = os.path.join(json_path, str(idx))
         with open(item_json_path, 'w') as f:
             json.dump(item_json, f)
 
