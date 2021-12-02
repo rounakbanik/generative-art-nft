@@ -69,8 +69,9 @@ def generate_single_image(filepaths, output_filename=None):
     
     # Loop through layers 1 to n and stack them on top of another
     for filepath in filepaths[1:]:
-        img = Image.open(os.path.join('assets', filepath))
-        bg.paste(img, (0,0), img)
+        if filepath.endswith('.png'):
+            img = Image.open(os.path.join('assets', filepath))
+            bg.paste(img, (0,0), img)
     
     # Save the final image into desired location
     if output_filename is not None:
