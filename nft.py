@@ -141,14 +141,28 @@ def generate_trait_set_from_config():
         
     return trait_set, trait_paths
 
+def is_dupliacted(rarity_dict, trait_sets, count):
+    if count == 0:
+        return False
+
+    for index in range(count):
+        diff_count = 0
+        for idx, trait in enumerate(trait_sets):
+            if rarity_dict[CONFIG[idx]['name']][index] != trait[: -1 * len('.png')]:
+                diff_count += 1
+        
+        if diff_count == 0:
+            return True
+
+    return False
 
 # Generate the image set. Don't change drop_dup
 def generate_images(edition, count, drop_dup=True):
     
     # Initialize an empty rarity table
-    rarity_table = {}
+    rarity_dict = {}
     for layer in CONFIG:
-        rarity_table[layer['name']] = []
+        rarity_dict[layer['name']] = []
 
     # Define output path to output/edition {edition_num}
     op_path = os.path.join('output', 'edition ' + str(edition), 'images')
@@ -161,13 +175,17 @@ def generate_images(edition, count, drop_dup=True):
         os.makedirs(op_path)
       
     # Create the images
-    for n in progressbar(range(count)):
-        
+    image_index = 0
+    while image_index < count:
         # Set image name
-        image_name = str(n).zfill(zfill_count) + '.png'
+        image_name = str(image_index).zfill(zfill_count) + '.png'
         
         # Get a random set of valid traits based on rarity weights
         trait_sets, trait_paths = generate_trait_set_from_config()
+
+        if is_dupliacted(rarity_dict, trait_sets, image_index):
+            print("dupliacted")
+            continue
 
         # Generate the actual image
         generate_single_image(trait_paths, os.path.join(op_path, image_name))
@@ -175,12 +193,15 @@ def generate_images(edition, count, drop_dup=True):
         # Populate the rarity table with metadata of newly created image
         for idx, trait in enumerate(trait_sets):
             if trait is not None:
-                rarity_table[CONFIG[idx]['name']].append(trait[: -1 * len('.png')])
+                rarity_dict[CONFIG[idx]['name']].append(trait[: -1 * len('.png')])
             else:
-                rarity_table[CONFIG[idx]['name']].append('none')
-    
+                rarity_dict[CONFIG[idx]['name']].append('none')
+        
+        # increase generated image count
+        image_index += 1
+        
     # Create the final rarity table by removing duplicate creat
-    rarity_table = pd.DataFrame(rarity_table).drop_duplicates()
+    rarity_table = pd.DataFrame(rarity_dict).drop_duplicates()
     print("Generated %i images, %i are distinct" % (count, rarity_table.shape[0]))
     
     if drop_dup:
