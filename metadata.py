@@ -56,7 +56,8 @@ def get_attribute_metadata(metadata_path):
     df.columns = [clean_attributes(col) for col in df.columns]
 
     # Get zfill count based on number of images generated
-    zfill_count = len(str(df.shape[0]))
+    # -1 according to nft.py. Otherwise not working for 100 NFTs, 1000 NTFs, 10000 NFTs and so on
+    zfill_count = len(str(df.shape[0]-1))
 
     return df, zfill_count
 
