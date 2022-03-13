@@ -149,7 +149,7 @@ def is_dupliacted(rarity_dict, trait_sets, count):
         diff_count = 0
         for idx, trait in enumerate(trait_sets):
             if trait is None:
-                if rarity_dict[CONFIG[idx]['name']][index] != None:
+                if rarity_dict[CONFIG[idx]['name']][index] != 'none':
                     diff_count += 1
             if trait is not None:
                 if rarity_dict[CONFIG[idx]['name']][index] != trait[: -1 * len('.png')]:
