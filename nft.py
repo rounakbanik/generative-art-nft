@@ -8,7 +8,7 @@ import numpy as np
 import time
 import os
 import random
-from progressbar import progressbar
+import progressbar
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -148,8 +148,12 @@ def is_dupliacted(rarity_dict, trait_sets, count):
     for index in range(count):
         diff_count = 0
         for idx, trait in enumerate(trait_sets):
-            if rarity_dict[CONFIG[idx]['name']][index] != trait[: -1 * len('.png')]:
-                diff_count += 1
+            if trait is None:
+                if rarity_dict[CONFIG[idx]['name']][index] != None:
+                    diff_count += 1
+            if trait is not None:
+                if rarity_dict[CONFIG[idx]['name']][index] != trait[: -1 * len('.png')]:
+                    diff_count += 1
         
         if diff_count == 0:
             return True
@@ -176,6 +180,8 @@ def generate_images(edition, count, drop_dup=True):
       
     # Create the images
     image_index = 0
+    # initialize progressbar
+    bar = progressbar.ProgressBar(max_value=progressbar.UnknownLength)
     while image_index < count:
         # Set image name
         image_name = str(image_index).zfill(zfill_count) + '.png'
@@ -184,7 +190,6 @@ def generate_images(edition, count, drop_dup=True):
         trait_sets, trait_paths = generate_trait_set_from_config()
 
         if is_dupliacted(rarity_dict, trait_sets, image_index):
-            print("dupliacted")
             continue
 
         # Generate the actual image
@@ -199,6 +204,7 @@ def generate_images(edition, count, drop_dup=True):
         
         # increase generated image count
         image_index += 1
+        bar.update(image_index)
         
     # Create the final rarity table by removing duplicate creat
     rarity_table = pd.DataFrame(rarity_dict).drop_duplicates()
